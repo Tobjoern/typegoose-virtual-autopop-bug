@@ -1,19 +1,18 @@
-import { getModelForClass, prop, getName, Ref, plugin } from '@typegoose/typegoose';
+import { getModelForClass, prop, getName, Ref, plugin, arrayProp } from '@typegoose/typegoose';
 import { TimeStamps } from '@typegoose/typegoose/lib/defaultClasses';
-import { ReferenceEntity } from './Reference.entity'
-import autoPop from 'mongoose-autopopulate'
+import { SubEntity } from './SubEntity';
 
-@plugin(autoPop)
+
 class ExampleEntity extends TimeStamps {
 
-    @prop({ required: true, unique: true, type: String  })
+    @prop({ required: true, unique: true, type: String })
     productId!: string;
 
-    @prop({ ref: getName(ReferenceEntity), foreignField: 'productId', localField: 'productId', autopopulate: true })
-    planInfo!: Ref<ReferenceEntity>;
+    @prop({ required: true, type: () => [SubEntity] })
+    subEntities!: SubEntity[]
 
-    @prop({ ref: getName(ReferenceEntity), autopopulate: true })
-    planInfo2!: Ref<ReferenceEntity>;
+    @arrayProp({ required: true, type: SubEntity })
+    otherSubEntities!: SubEntity[]
 
 }
 

@@ -1,43 +1,53 @@
 import mongoose from 'mongoose'
 import { ExampleEntityModel } from './Example.entity'
 import { ReferenceEntityModel } from './Reference.entity'
+import { SubEntity } from './SubEntity'
 
-mongoose.connect('mongodb://localhost:27017/typegoose-bug', {
+mongoose.connect('mongodb://localhost:27017/typegoose-bug-2', {
     useNewUrlParser: true,
     useCreateIndex: true,
     useFindAndModify: false,
     useUnifiedTopology: true
-}).then(async () => {
+}).then(async connection => {
+    const collections = connection.connection.collections
+
+    for (const key of Object.keys(collections)) {
+        await collections[key].deleteMany({})
+    }
+
     console.log('Connected!')
 
-    // cleanup
     await ExampleEntityModel.deleteMany({})
 
-    await ReferenceEntityModel.deleteMany({})
+    const exampleEntity = new ExampleEntityModel()
 
-    const reference = new ReferenceEntityModel()
+    const otherSubEnt = new SubEntity()
 
-    reference.productId = 'prod_1'
+    otherSubEnt.length = 25
 
-    await reference.save()
+    const subEnt = new SubEntity()
 
-    const example = new ExampleEntityModel()
+    subEnt.length = 100
 
-    example.productId = 'prod_1'
-    example.planInfo2 = reference
+    exampleEntity.productId = 'blub'
+    exampleEntity.subEntities = [subEnt]
+    exampleEntity.otherSubEntities = [otherSubEnt]
 
-    await example.save()
+    await exampleEntity.save()
 
-    const fetcched = await ExampleEntityModel.findById(example._id)
+    const retrieved = await ExampleEntityModel.findById(exampleEntity._id)
 
-    // This should also work!
-    console.log(fetcched ? fetcched.planInfo : null);
-    console.log(fetcched ? fetcched.planInfo2 : null);
-    console.log('----------')
-    const fetched2 = await ExampleEntityModel.findById(example._id).populate('planInfo')
+    if (retrieved) {
+        console.log(retrieved)
 
-    console.log(fetched2 ? fetched2.planInfo : null);
-    console.log(fetched2 ? fetched2.planInfo2 : null);
+        retrieved.otherSubEntities.forEach(retSubEnt => {
+            console.log(retSubEnt.getInfo())
+        })
+
+        retrieved.subEntities.forEach(retSubEnt => {
+            console.log(retSubEnt.getInfo())
+        })
+    }
 })
 
 
