@@ -8,10 +8,10 @@ class ExampleEntity extends TimeStamps {
     @prop({ required: true, unique: true, type: String })
     productId!: string;
 
-    @prop({ required: true, type: () => [SubEntity] })
+    @prop({ required: true, type: () => SubEntity })
     subEntities!: SubEntity[]
 
-    @arrayProp({ required: true, type: SubEntity })
+    @prop({ required: true, type: SubEntity })
     otherSubEntities!: SubEntity[]
 
 }

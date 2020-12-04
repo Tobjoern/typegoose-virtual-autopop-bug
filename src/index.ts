@@ -41,12 +41,13 @@ mongoose.connect('mongodb://localhost:27017/typegoose-bug-2', {
     const retrieved = await ExampleEntityModel.findById(exampleEntity._id)
 
     if (retrieved) {
-        console.log(retrieved)
+        // console.log(retrieved)
 
+        console.log('Using normal type')
         retrieved.otherSubEntities.forEach(retSubEnt => {
             console.log(retSubEnt.getInfo())
         })
-
+        console.log('Using arrow function type')
         retrieved.subEntities.forEach(retSubEnt => {
             console.log(retSubEnt.getInfo())
         })
