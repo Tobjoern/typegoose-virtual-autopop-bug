@@ -1,7 +1,10 @@
 import mongoose from 'mongoose'
 import { ExampleEntityModel } from './Example.entity'
-import { ReferenceEntityModel } from './Reference.entity'
 import { SubEntity } from './SubEntity'
+
+
+console.log('The mongoose version:')
+console.log(mongoose.version)
 
 mongoose.connect('mongodb://localhost:27017/typegoose-bug-2', {
     useNewUrlParser: true,
