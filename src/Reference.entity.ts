@@ -1,8 +1,7 @@
 import { getModelForClass, prop } from '@typegoose/typegoose';
-import { TimeStamps } from '@typegoose/typegoose/lib/defaultClasses';
 
 
-export class ReferenceEntity extends TimeStamps {
+export class ReferenceEntity {
 
     @prop({ required: true, unique: true, type: String  })
     productId!: string;
