@@ -11,6 +11,21 @@ import { ExampleEntityModel } from './Example.entity';
 import { SubEntity } from './SubEntity';
 console.log('The mongoose version:');
 console.log(mongoose.version);
+function performTest(valKey) {
+    return __awaiter(this, void 0, void 0, function* () {
+        console.log("Performing test for: " + valKey);
+        const cat = new SubEntity();
+        cat.value = 'Johnson';
+        const holder = new ExampleEntityModel();
+        holder[valKey] = [cat];
+        yield holder.save();
+        const retrived = yield ExampleEntityModel.findOne({});
+        if (retrived) {
+            console.log(`Test for ${valKey} succeeded.`);
+            yield retrived.remove();
+        }
+    });
+}
 mongoose.connect('mongodb://localhost:27017/experiments-2', {
     useNewUrlParser: true,
     useCreateIndex: true,
@@ -22,15 +37,9 @@ mongoose.connect('mongodb://localhost:27017/experiments-2', {
         yield collections[key].deleteMany({});
     }
     console.log('Connected!');
-    const cat = new SubEntity();
-    cat.value = 'Johnson';
-    const holder = new ExampleEntityModel();
-    holder.cats = [cat];
-    yield holder.save();
-    const retrived = yield ExampleEntityModel.findOne({});
-    if (retrived) {
-        console.log('Retrieval successful!');
-        console.log(retrived.cats);
-    }
+    yield performTest('catsArrProp');
+    yield performTest('catsProp');
+    yield performTest('catsPropV2');
     console.log("Done.");
 }));
+//# sourceMappingURL=main.js.map

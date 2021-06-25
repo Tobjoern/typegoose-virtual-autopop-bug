@@ -12,13 +12,12 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "@typegoose/typegoose": "^7.4.4",
+    "@typegoose/typegoose": "^7.6.1",
     "esm": "^3.2.25",
-    "mongoose": "^5.10.18",
-    "reflect-metadata": "^0.1.13"
+    "mongoose": "^5.10.18"
   },
   "devDependencies": {
-    "@types/mongoose": "^5.10.2",
+    "@types/mongoose": "^5.10.5",
     "ts-node": "^9.1.0"
   }
 }

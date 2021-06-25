@@ -1,0 +1,1 @@
+{"version":3,"file":"index.js","sourceRoot":"./src/","sources":["index.ts"],"names":[],"mappings":";AAAA,OAAO,GAAG,OAAO,CAAC,KAAK,CAAC,CAAC,MAAM,CAAA,aAAa,CAAC,CAAA;AAC7C,MAAM,CAAC,OAAO,GAAG,OAAO,CAAC,WAAW,CAAC,CAAA","sourcesContent":["require = require(\"esm\")(module/*, options*/)\nmodule.exports = require(\"./main.js\")"]}

@@ -5,8 +5,14 @@ import { SubEntity } from './SubEntity';
 
 class ExampleEntity extends TimeStamps {
 
+    @prop({ type: () => [SubEntity] })
+    public catsProp!: SubEntity[];
+
+    @prop({ type: [SubEntity] })
+    public catsPropV2!: SubEntity[];
+
     @arrayProp({ type: SubEntity })
-    public cats!: SubEntity[];
+    public catsArrProp!: SubEntity[];
 
 }
 

@@ -14,3 +14,4 @@ __decorate([
     prop({ required: true, type: String }),
     __metadata("design:type", String)
 ], SubEntity.prototype, "value", void 0);
+//# sourceMappingURL=SubEntity.js.map
