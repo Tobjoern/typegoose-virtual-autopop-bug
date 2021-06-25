@@ -13,6 +13,7 @@
   "license": "ISC",
   "dependencies": {
     "@typegoose/typegoose": "^7.4.4",
+    "esm": "^3.2.25",
     "mongoose": "^5.10.18",
     "reflect-metadata": "^0.1.13"
   },
