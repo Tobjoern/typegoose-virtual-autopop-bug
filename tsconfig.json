@@ -12,7 +12,7 @@
     "outDir": "./build",
     "noImplicitAny": false,
     "target": "ES6",
-    "module": "ES2015",
+    "module": "commonjs",
     "strict": true,
     "esModuleInterop": true,
     "experimentalDecorators": true,

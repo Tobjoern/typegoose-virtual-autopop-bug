@@ -1,36 +1,30 @@
 import mongoose from 'mongoose'
 import { ExampleEntityModel } from './Example.entity'
-import { SubEntity } from './SubEntity'
 
 console.log('The mongoose version:')
 console.log(mongoose.version)
 
-async function performTest(valKey: 'catsProp' | 'catsPropV2' | 'catsArrProp') {
-    console.log("Performing test for: " + valKey)
+Error.stackTraceLimit = Infinity;
 
-    const cat = new SubEntity()
 
-    cat.value = 'Johnson'
-
+async function doWork() {
     const holder = new ExampleEntityModel()
 
-    holder[valKey] = [cat]
-
+    // this should be noted in the trace
     await holder.save()
+}
 
-    const retrived = await ExampleEntityModel.findOne({})
+function anotherFunc() {
+    // other stuff
+}
 
-    if (retrived) {
-        console.log(`Test for ${valKey} succeeded.`)
-
-        await retrived.remove()
-    }
+async function oneFunc() {
+    await doWork()
+    anotherFunc()
 }
 
 mongoose.connect('mongodb://localhost:27017/experiments-2', {
     useNewUrlParser: true,
-    useCreateIndex: true,
-    useFindAndModify: false,
     useUnifiedTopology: true
 }).then(async connection => {
     const collections = connection.connection.collections
@@ -41,14 +35,17 @@ mongoose.connect('mongodb://localhost:27017/experiments-2', {
 
     console.log('Connected!')
 
-    await performTest('catsArrProp')
+    try {
+        await oneFunc()
+    } catch (e) {
+        console.error(e)
+    }
 
-    await performTest('catsProp')
+    // await performTest('catsArrProp')
 
-    await performTest('catsPropV2')
+    // await performTest('catsProp')
+
+    // await performTest('catsPropV2')
 
     console.log("Done.")
 })
-
-
-
