@@ -16,11 +16,14 @@ async function doWork() {
 
 function anotherFunc() {
     // other stuff
+    // const a = null as any
+
+    // a.b = 'bar'
 }
 
 async function oneFunc() {
-    await doWork()
     anotherFunc()
+    await doWork()
 }
 
 mongoose.connect('mongodb://localhost:27017/experiments-2', {
